@@ -1868,7 +1868,7 @@
  </external_reactions>
 
  <system file="visual-reference-point-extensions"/>
- <system file="mooring-jsbsim">
+ <system file="airship-mooring">
 
   <!-- Configuration -->
   <!--  Mooring -->
