@@ -2,7 +2,7 @@
 ##
 ## Zeppelin LZ 121 "Nordstern" airship for FlightGear.
 ##
-##  Copyright (C) 2010 - 2015  Anders Gidenstam  (anders(at)gidenstam.org)
+##  Copyright (C) 2010 - 2016  Anders Gidenstam  (anders(at)gidenstam.org)
 ##  This file is licensed under the GPL license v2 or later.
 ##
 ###############################################################################
@@ -355,28 +355,56 @@ var debug_display_view_handler = {
         me.right = screen.display.new(-250, 20);
         # Static condition
         me.left.add("/fdm/jsbsim/static-condition/net-lift-lbs");
-        me.left.add("/fdm/jsbsim/atmosphere/T-R");
-        me.left.add("/fdm/jsbsim/buoyant_forces/gas-cell[1]/temp-R",
-                    "/fdm/jsbsim/buoyant_forces/gas-cell[10]/temp-R");
+        me.left.add("/fdm/jsbsim/static-condition/static-pitch-moment-lbsft");
         # C.G.
         me.left.add("/fdm/jsbsim/inertia/cg-x-in");
-        me.left.add("/fdm/jsbsim/mooring/total-distance-ft");
+        # Atmosphere and gas temperatures
+        me.left.add("/fdm/jsbsim/atmosphere/T-R");
+        me.left.add("/fdm/jsbsim/buoyant_forces/gas-cell[0]/temp-R",
+                    "/fdm/jsbsim/buoyant_forces/gas-cell[1]/temp-R",
+                    "/fdm/jsbsim/buoyant_forces/gas-cell[10]/temp-R",
+                    "/fdm/jsbsim/buoyant_forces/gas-cell[11]/temp-R");
         # Pitch moments
-        me.left.add("/fdm/jsbsim/moments/m-buoyancy-lbsft",
-                    "/fdm/jsbsim/moments/m-aero-lbsft",
-                    "/fdm/jsbsim/moments/m-total-lbsft");
-       
+        #me.left.add("/fdm/jsbsim/moments/m-buoyancy-lbsft",
+        #            "/fdm/jsbsim/moments/m-aero-lbsft",
+        #            "/fdm/jsbsim/moments/m-total-lbsft");
+        # Mooring related
+        me.left.add("/fdm/jsbsim/mooring/total-distance-ft",
+                    "/fdm/jsbsim/mooring/latitude-diff-ft",
+                    "/fdm/jsbsim/mooring/longitude-diff-ft",
+                    "/fdm/jsbsim/mooring/altitude-diff-ft");
+        #me.left.add("/fdm/jsbsim/velocities/vrp-v-north-fps",
+        #            "/velocities/speed-north-fps");
+        #me.left.add("/fdm/jsbsim/velocities/vrp-v-east-fps",
+        #            "/velocities/speed-east-fps");
+        #me.left.add("/fdm/jsbsim/velocities/vrp-v-down-fps",
+        #            "/velocities/speed-down-fps");
+
         # Flight information
         me.right.add("orientation/pitch-deg");
         me.right.add("surface-positions/elevator-pos-norm");
         me.right.add("surface-positions/rudder-pos-norm");
         me.right.add("instrumentation/altimeter/indicated-altitude-ft");
         me.right.add("instrumentation/airspeed-indicator/indicated-speed-kt");
+        me.right.add("instrumentation/magnetic-compass/indicated-heading-deg");
         # Engines
         me.right.add("/engines/engine[0]/rpm",
                      "/engines/engine[1]/rpm",
                      "/engines/engine[2]/rpm",
-                     "/engines/engine[3]/rpm");
+                     "/engines/engine[3]/rpm",
+                     "/fdm/jsbsim/propulsion/engine[0]/power-hp",
+                     "/fdm/jsbsim/propulsion/engine[1]/power-hp",
+                     "/fdm/jsbsim/propulsion/engine[2]/power-hp",
+                     "/fdm/jsbsim/propulsion/engine[3]/power-hp",
+                     "/fdm/jsbsim/propulsion/engine[0]/egt-degF",
+                     "/fdm/jsbsim/propulsion/engine[1]/egt-degF",
+                     "/fdm/jsbsim/propulsion/engine[2]/egt-degF",
+                     "/fdm/jsbsim/propulsion/engine[3]/egt-degF",
+                     "/fdm/jsbsim/propulsion/engine[0]/fuel-flow-rate-pps",
+                     "/fdm/jsbsim/propulsion/engine[1]/fuel-flow-rate-pps",
+                     "/fdm/jsbsim/propulsion/engine[2]/fuel-flow-rate-pps",
+                     "/fdm/jsbsim/propulsion/engine[3]/fuel-flow-rate-pps"
+                     );
 
         me.shown = 1;
         me.stop();
@@ -497,9 +525,9 @@ var dialog = {
         content.set("default-padding", 5);
         props.globals.initNode("sim/about/text",
              "Zeppelin LZ 121 \"Nordstern\" airship for FlightGear\n" ~
-             "Copyright (C) 2010 - 2015  Anders Gidenstam\n\n" ~
+             "Copyright (C) 2010 - 2016  Anders Gidenstam\n\n" ~
              "FlightGear flight simulator\n" ~
-             "Copyright (C) 1996 - 2015  http://www.flightgear.org\n\n" ~
+             "Copyright (C) 1996 - 2016  http://www.flightgear.org\n\n" ~
              "This is free software, and you are welcome to\n" ~
              "redistribute it under certain conditions.\n" ~
              "See the GNU GENERAL PUBLIC LICENSE Version 2 for the details.",
